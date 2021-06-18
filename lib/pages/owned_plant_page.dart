@@ -5,20 +5,25 @@ import 'package:flutterinit/icons.dart';
 import 'package:flutterinit/models/plant.dart';
 import 'package:flutterinit/pages/main_page.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-class PlantPageWidget extends StatefulWidget {
+class OwnedPlantPageWidget extends StatefulWidget {
   final Plant plant;
 
-  PlantPageWidget({
+  OwnedPlantPageWidget({
     required this.plant,
   });
 
   @override
-  _PlantPageWidgetState createState() => _PlantPageWidgetState();
+  _OwnedPlantPageWidgetState createState() => _OwnedPlantPageWidgetState();
 }
 
-class _PlantPageWidgetState extends State<PlantPageWidget> {
-  void onAddPlantPressed(BuildContext context) async {
+class _OwnedPlantPageWidgetState extends State<OwnedPlantPageWidget> {
+  String _infotitle = '';
+  String _plantinfo = '';
+  PanelController _pc = PanelController();
+
+  void onBackPressed(BuildContext context) async {
     await Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -38,131 +43,212 @@ class _PlantPageWidgetState extends State<PlantPageWidget> {
           fit: BoxFit.fitHeight,
         ),
       ),
-      child: Stack(children: [
-        Container(
-          margin: new EdgeInsets.fromLTRB(0.0, 440.0, 0.0, 0.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: const Radius.circular(20.0),
-              topRight: const Radius.circular(20.0),
-            ),
-            color: CustomColorScheme.primaryColorSand,
-          ),
-        ),
-        Container(
-          margin: new EdgeInsets.fromLTRB(10.0, 23.0, 10.0, 720.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              bottomLeft: const Radius.circular(10.0),
-              bottomRight: const Radius.circular(10.0),
-              topLeft: const Radius.circular(10.0),
-              topRight: const Radius.circular(10.0),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: CustomColorScheme.grey,
-                offset: Offset(0.0, 2.0),
-                blurRadius: 6.0,
+      child: Stack(
+        children: [
+          Container(
+            margin: new EdgeInsets.fromLTRB(0.0, 440.0, 0.0, 0.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: const Radius.circular(20.0),
+                topRight: const Radius.circular(20.0),
               ),
-            ],
-            color: CustomColorScheme.primaryColorSand,
+              color: CustomColorScheme.primaryColorSand,
+            ),
           ),
-        ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 30,
+          Container(
+            margin: new EdgeInsets.fromLTRB(10.0, 23.0, 10.0, 720.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: const Radius.circular(10.0),
+                bottomRight: const Radius.circular(10.0),
+                topLeft: const Radius.circular(10.0),
+                topRight: const Radius.circular(10.0),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 10,
-                  ),
-                  BackButton(
-                    onPressed: () => this.onAddPlantPressed(context),
-                  ),
-                  Text(
-                    widget.plant.name,
-                    style: const TextStyle(
-                      fontSize: 34.0,
-                      fontWeight: FontWeight.normal,
+              boxShadow: [
+                BoxShadow(
+                  color: CustomColorScheme.grey,
+                  offset: Offset(0.0, 2.0),
+                  blurRadius: 6.0,
+                ),
+              ],
+              color: CustomColorScheme.primaryColorSand,
+            ),
+          ),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 10,
                     ),
+                    BackButton(
+                      onPressed: () => this.onBackPressed(context),
+                    ),
+                    Text(
+                      widget.plant.name,
+                      style: const TextStyle(
+                        fontSize: 34.0,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 370,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          child: PlantInfoButton(
+                            label: 'Light',
+                            icon: Icons.wb_sunny_rounded,
+                            onPressed: () {
+                              setState(() {});
+                              _infotitle = 'Light';
+                              _plantinfo = widget.plant.lightInformation;
+                              _pc.open();
+                            },
+                          ),
+                        ),
+                        Container(
+                          child: PlantInfoButton(
+                            label: 'Fertilizer',
+                            icon: CustomIcons.fertilizer_leaf,
+                            onPressed: () {
+                              setState(() {});
+                              _infotitle = 'Fertilizer';
+                              _plantinfo = widget.plant.fertilizerInformation;
+                              _pc.open();
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          child: PlantInfoButton(
+                            label: 'Water',
+                            icon: CustomIcons.watering_can,
+                            onPressed: () {
+                              setState(() {});
+                              _infotitle = 'Water';
+                              _plantinfo = widget.plant.waterInformation;
+                              _pc.open();
+                            },
+                          ),
+                        ),
+                        Container(
+                          child: PlantInfoButton(
+                            label: 'Temp',
+                            icon: Icons.thermostat_rounded,
+                            onPressed: () {
+                              setState(() {});
+                              _infotitle = 'Temperature';
+                              _plantinfo = widget.plant.temperatureInformation;
+                              _pc.open();
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Container(
+                          child: PlantInfoButton(
+                            label: 'Schedule',
+                            icon: Icons.calendar_today_rounded,
+                            onPressed: () => this.onBackPressed(context),
+                          ),
+                        ),
+                        Container(
+                          child: PlantInfoButton(
+                            label: 'Log',
+                            icon: CustomIcons.log,
+                            onPressed: () => this.onBackPressed(context),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+                SlidingUpPanel(
+                  controller: _pc,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 370,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
+                  backdropEnabled: true,
+                  maxHeight: MediaQuery.of(context).size.height - 240,
+                  minHeight: 0,
+                  panel: Column(
                     children: [
-                      Container(
-                        child: PlantInfoButton(
-                          label: 'Light',
-                          icon: Icons.wb_sunny_rounded,
-                          onPressed: () => this.onAddPlantPressed(context),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                        child: Container(
+                          height: 6,
+                          width: 99,
+                          decoration: BoxDecoration(
+                            color: CustomColorScheme.primaryColor2,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              _infotitle,
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Container(
-                        child: PlantInfoButton(
-                          label: 'Fertilizer',
-                          icon: CustomIcons.fertilizer_leaf,
-                          onPressed: () => this.onAddPlantPressed(context),
+                        height: 2,
+                        width: 380,
+                        decoration: BoxDecoration(
+                          color: CustomColorScheme.primaryColor2,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Text(
+                          _plantinfo,
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  Column(
-                    children: [
-                      Container(
-                        child: PlantInfoButton(
-                          label: 'Water',
-                          icon: CustomIcons.watering_can,
-                          onPressed: () => this.onAddPlantPressed(context),
-                        ),
-                      ),
-                      Container(
-                        child: PlantInfoButton(
-                          label: 'Temp',
-                          icon: Icons.thermostat_rounded,
-                          onPressed: () => this.onAddPlantPressed(context),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Container(
-                        child: PlantInfoButton(
-                          label: 'Schedule',
-                          icon: Icons.calendar_today_rounded,
-                          onPressed: () => this.onAddPlantPressed(context),
-                        ),
-                      ),
-                      Container(
-                        child: PlantInfoButton(
-                          label: 'Log',
-                          icon: CustomIcons.log,
-                          onPressed: () => this.onAddPlantPressed(context),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

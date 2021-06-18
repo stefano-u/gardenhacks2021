@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterinit/components/add_button_vertical.dart';
+import 'package:flutterinit/components/owned_plant_button.dart';
 import 'package:flutterinit/components/plant_info_button.dart';
 import 'package:flutterinit/constants.dart';
 import 'package:flutterinit/icons.dart';
@@ -24,7 +25,19 @@ class _PlantPageWidgetState extends State<PlantPageWidget> {
   String _plantinfo = '';
   PanelController _pc = PanelController();
 
-  void onAddPlantPressed(BuildContext context) async {
+  void onBackPressed(BuildContext context) async {
+    await Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MainPageWidget(),
+      ),
+    );
+  }
+
+  void onAddPlantPressed(BuildContext context, Plant selectedPlant) async {
+    myPlantsList.add(
+      OwnedPlantButton(plant: selectedPlant),
+    );
     await Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -92,7 +105,7 @@ class _PlantPageWidgetState extends State<PlantPageWidget> {
                           width: 10,
                         ),
                         BackButton(
-                          onPressed: () => this.onAddPlantPressed(context),
+                          onPressed: () => this.onBackPressed(context),
                         ),
                         Text(
                           widget.plant.name,
@@ -167,7 +180,7 @@ class _PlantPageWidgetState extends State<PlantPageWidget> {
                         ),
                         Container(
                           child: VerticalAddButton(
-                            onPressed: () => this.onAddPlantPressed(context),
+                            onPressed: () => this.onAddPlantPressed,
                           ),
                         ),
                       ],

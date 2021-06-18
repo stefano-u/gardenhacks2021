@@ -1,16 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterinit/constants.dart';
+import 'package:flutterinit/models/plant.dart';
+import 'package:flutterinit/pages/owned_plant_page.dart';
 
 class OwnedPlantButton extends StatelessWidget {
   /// Text to show on button
 
-  /// Event handler for when the button is pressed
-  final Function() onPressed;
+  final Plant plant;
 
   OwnedPlantButton({
-    required this.onPressed,
+    required this.plant,
   });
+
+  void onPlantInfoButtonPressed(BuildContext context, Plant selectedPlant) async {
+    await Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OwnedPlantPageWidget(
+          plant: selectedPlant,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +32,7 @@ class OwnedPlantButton extends StatelessWidget {
         height: 250,
         width: double.infinity,
         child: ElevatedButton(
-          onPressed: this.onPressed,
+          onPressed: () => this.onPlantInfoButtonPressed,
           child: Stack(
             children: [
               Container(
@@ -28,7 +40,7 @@ class OwnedPlantButton extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
                   child: Text(
-                    'Monstera',
+                    plant.name,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Colors.black,
@@ -41,7 +53,7 @@ class OwnedPlantButton extends StatelessWidget {
               Container(
                 alignment: Alignment.bottomRight,
                 child: Image.asset(
-                  ImageFiles.cardMonstera,
+                  plant.photoCard,
                   fit: BoxFit.fill,
                 ),
               ),

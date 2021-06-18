@@ -38,3 +38,5 @@ class ImageFiles {
   static final String cardPothos = 'images/card_pothos.png';
   static final String cardMoneyPlant = 'images/card_money_plant.png';
 }
+
+List<Widget> myPlantsList = [];

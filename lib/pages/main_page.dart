@@ -119,6 +119,9 @@ class _HomePageState extends State<MainPageWidget> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Column(
+            children: myPlantsList,
+          ),
           EmptyHomePage(),
           Row(
             children: [
