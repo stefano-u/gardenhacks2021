@@ -36,7 +36,13 @@ class _HomePageState extends State<SearchPageWidget> {
   List<Widget> generateListTiles() {
     List<Widget> listTiles = [];
 
-    selectedPlants.forEach((Plant plant) {
+    // If no plants have been selected, then display ALL of them
+    List<Plant> dataSource = selectedPlants;
+    if (selectedPlants.isEmpty) {
+      dataSource = mockPlants;
+    }
+
+    dataSource.forEach((Plant plant) {
       listTiles.add(
         ListTile(
           title: Text(plant.name),
@@ -82,17 +88,15 @@ class _HomePageState extends State<SearchPageWidget> {
           CameraPage(camera: widget.camera),
 
           // Search bar on top
-          Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: FloatingSearchBar(
-              automaticallyImplyBackButton: false,
-              hint: 'Search for plants',
-              transitionCurve: Curves.easeInOutCubic,
-              transition: CircularFloatingSearchBarTransition(),
-              physics: const BouncingScrollPhysics(),
-              builder: (context, _) => buildFloatingSearchBarBody(),
-              onQueryChanged: onSearchChanged,
-            ),
+          FloatingSearchBar(
+            automaticallyImplyBackButton: false,
+            hint: 'Search for plants',
+            margins: EdgeInsets.all(20),
+            transitionCurve: Curves.easeInOutCubic,
+            transition: CircularFloatingSearchBarTransition(),
+            physics: const BouncingScrollPhysics(),
+            builder: (context, _) => buildFloatingSearchBarBody(),
+            onQueryChanged: onSearchChanged,
           ),
         ],
       ),
