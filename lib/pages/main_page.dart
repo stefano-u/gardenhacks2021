@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterinit/pages/empty_home_page.dart';
-import 'package:flutterinit/pages/camera_page.dart';
 import 'package:flutterinit/pages/encyclopedia_page.dart';
 import 'package:flutterinit/pages/plant_search_page.dart';
 import '../constants.dart';
@@ -15,23 +14,15 @@ class _HomePageState extends State<MainPageWidget> {
   int _currentNavBarIndex = 0;
 
   void onAddPressed(BuildContext context) async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SearchPageWidget(),
-      ),
-    );
-  }
-
-  // Open the camera page
-  void openCamera() async {
     List<CameraDescription> cameras = await availableCameras();
     CameraDescription firstCamera = cameras.first;
 
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CameraPage(camera: firstCamera),
+        builder: (context) => SearchPageWidget(
+          camera: firstCamera,
+        ),
       ),
     );
   }

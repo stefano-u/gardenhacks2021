@@ -1,10 +1,16 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterinit/mocks/plants_mocks.dart';
 import 'package:flutterinit/models/plant.dart';
+import 'package:flutterinit/pages/camera_page.dart';
 import 'package:flutterinit/pages/plant_page.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class SearchPageWidget extends StatefulWidget {
+  final CameraDescription camera;
+
+  SearchPageWidget({required this.camera});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -44,7 +50,7 @@ class _HomePageState extends State<SearchPageWidget> {
     return listTiles;
   }
 
-  Widget buildBody() {
+  Widget buildFloatingSearchBarBody() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
       child: Material(
@@ -69,17 +75,26 @@ class _HomePageState extends State<SearchPageWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(0.0),
-        child: FloatingSearchBar(
-          automaticallyImplyBackButton: false,
-          hint: 'Search for plants',
-          transitionCurve: Curves.easeInOutCubic,
-          transition: CircularFloatingSearchBarTransition(),
-          physics: const BouncingScrollPhysics(),
-          builder: (context, _) => buildBody(),
-          onQueryChanged: onSearchChanged,
-        ),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Camera on bottom
+          CameraPage(camera: widget.camera),
+
+          // Search bar on top
+          Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: FloatingSearchBar(
+              automaticallyImplyBackButton: false,
+              hint: 'Search for plants',
+              transitionCurve: Curves.easeInOutCubic,
+              transition: CircularFloatingSearchBarTransition(),
+              physics: const BouncingScrollPhysics(),
+              builder: (context, _) => buildFloatingSearchBarBody(),
+              onQueryChanged: onSearchChanged,
+            ),
+          ),
+        ],
       ),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(75),
