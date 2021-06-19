@@ -7,6 +7,8 @@ import 'package:flutterinit/icons.dart';
 import 'package:flutterinit/models/plant.dart';
 import 'package:flutterinit/pages/main_page.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutterinit/providers/main_providers.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PlantPageWidget extends StatefulHookWidget {
@@ -23,9 +25,12 @@ class PlantPageWidget extends StatefulHookWidget {
 class _PlantPageWidgetState extends State<PlantPageWidget> {
   late ValueNotifier<String>? _infoTitle;
   late ValueNotifier<String>? _plantInfo;
+  late List<Plant> userPlants;
   final PanelController _pc = PanelController();
 
   void onAddPlantPressed(BuildContext context) async {
+    userPlants.add(widget.plant);
+
     await Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -45,6 +50,7 @@ class _PlantPageWidgetState extends State<PlantPageWidget> {
   Widget build(BuildContext context) {
     _infoTitle = useState('');
     _plantInfo = useState('');
+    userPlants = useProvider(listUserPlants).state;
 
     return Scaffold(
       body: Stack(
