@@ -72,7 +72,8 @@ class _HomePageState extends State<SearchPageWidget> {
       body: Padding(
         padding: const EdgeInsets.all(0.0),
         child: FloatingSearchBar(
-          hint: 'Search...',
+          automaticallyImplyBackButton: false,
+          hint: 'Search for plants',
           transitionCurve: Curves.easeInOutCubic,
           transition: CircularFloatingSearchBarTransition(),
           physics: const BouncingScrollPhysics(),
@@ -94,8 +95,12 @@ class _HomePageState extends State<SearchPageWidget> {
               ),
               Row(
                 children: [
-                  BackButton(
-                    onPressed: () => this.onBackButtonPressed(context),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: GestureDetector(
+                      onTap: () => this.onBackButtonPressed(context),
+                      child: Icon(Icons.arrow_back),
+                    ),
                   ),
                   Text(
                     'New Plants',
