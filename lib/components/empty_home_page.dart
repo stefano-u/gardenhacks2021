@@ -7,7 +7,8 @@ class EmptyHomePage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
         children: [
           Image.asset(
             ImageFiles.thinking,
@@ -17,36 +18,38 @@ class EmptyHomePage extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.black,
+          Flexible(
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.black,
+                ),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: 'You don’t have any plants yet, use the ',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: CustomColorScheme.grey,
+                    ),
+                  ),
+                  TextSpan(
+                    text: ' plus button',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: CustomColorScheme.primaryColor,
+                    ),
+                  ),
+                  TextSpan(
+                    text: ' to add a new member to your plant family.',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: CustomColorScheme.grey,
+                    ),
+                  ),
+                ],
               ),
-              children: <TextSpan>[
-                TextSpan(
-                  text: 'You don’t have any plants yet, use the ',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: CustomColorScheme.grey,
-                  ),
-                ),
-                TextSpan(
-                  text: ' plus button',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: CustomColorScheme.primaryColor,
-                  ),
-                ),
-                TextSpan(
-                  text: ' to add a new member to your plant family.',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: CustomColorScheme.grey,
-                  ),
-                ),
-              ],
             ),
           ),
           SizedBox(

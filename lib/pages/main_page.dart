@@ -116,41 +116,35 @@ class _HomePageState extends State<MainPageWidget> {
           ],
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          EmptyHomePage(),
-          Row(
-            children: [
-              Expanded(
-                child: CustomAddButton(
-                  onPressed: () => this.onAddPressed(context),
-                  icon: Icons.add_rounded,
-                ),
-              ),
-            ],
-          )
-        ],
+      body: EmptyHomePage(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add_rounded),
+        onPressed: () => this.onAddPressed(context),
+        backgroundColor: CustomColorScheme.primaryColor,
       ),
-      bottomNavigationBar: Builder(
-        builder: (context) => BottomAppBar(
-          child: SizedBox(
-            height: 70,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.menu_book_rounded),
-                  onPressed: () => Scaffold.of(context).openDrawer(),
-                ),
-                SizedBox(width: 200),
-                IconButton(
-                  icon: Icon(Icons.camera_alt),
-                  onPressed: this.openCamera,
-                ),
-              ],
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        clipBehavior: Clip.antiAlias,
+        notchMargin: 10,
+        shape: CircularNotchedRectangle(),
+        child: BottomNavigationBar(
+          selectedItemColor: CustomColorScheme.primaryColor,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+              ),
+              label: '',
             ),
-          ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.camera_alt,
+              ),
+              label: '',
+            ),
+          ],
         ),
       ),
     );
