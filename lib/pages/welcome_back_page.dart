@@ -24,11 +24,6 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> with TickerProvid
       return;
     }
 
-    if (email.contains(' ') || password.contains(' ')) {
-      showSnackbar('Email and password must not contain whitespaces');
-      return;
-    }
-
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: this.email.trim(),
@@ -118,6 +113,7 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> with TickerProvid
                 ),
                 LoginSignupTextfield(
                   label: 'Password',
+                  obscureText: true,
                   onTextChanged: (value) {
                     this.password = value;
                   },
