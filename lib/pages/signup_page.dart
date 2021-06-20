@@ -24,6 +24,11 @@ class _SignupPageWidgetState extends State<SignupPageWidget> with TickerProvider
       return;
     }
 
+    if (email.contains(' ') || password.contains(' ') || passwordConfirm.contains(' ')) {
+      showSnackbar('Email and password must not contain whitespaces');
+      return;
+    }
+
     if (password != passwordConfirm) {
       showSnackbar('Passwords do not match. Please try again.');
       return;
@@ -31,8 +36,8 @@ class _SignupPageWidgetState extends State<SignupPageWidget> with TickerProvider
 
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: this.email,
-        password: this.password,
+        email: this.email.trim(),
+        password: this.password.trim(),
       );
 
       await Navigator.push(
@@ -47,6 +52,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget> with TickerProvider
       } else if (e.code == 'email-already-in-use') {
         showSnackbar('The account already exists for that email.');
       }
+      showSnackbar(e.message!);
     } catch (e) {
       print(e);
     }

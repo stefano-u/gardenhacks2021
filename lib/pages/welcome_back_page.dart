@@ -24,10 +24,15 @@ class _WelcomePageWidgetState extends State<WelcomePageWidget> with TickerProvid
       return;
     }
 
+    if (email.contains(' ') || password.contains(' ')) {
+      showSnackbar('Email and password must not contain whitespaces');
+      return;
+    }
+
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: this.email,
-        password: this.password,
+        email: this.email.trim(),
+        password: this.password.trim(),
       );
 
       await Navigator.push(
